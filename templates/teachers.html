@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+
+{% block head %}
+<title>Teachers Database</title>
+<link rel="stylesheet" href="{{url_for('static', filename='style.css')}}">
+</style>
+{% endblock %}
+
+
+{% block body %}
+
+<div >
+    <h2 style="text-align: center">Teachers Database</h2>
+    <div class="navbar">
+        <a href="/welcome">Home</a>
+      
+        <a href="/teachers">Teacher Database</a>
+
+        <a href="/students">Student Database</a>
+
+        <a href="/departments">Department Database</a>
+
+        <a href="/courses">Course Database</a>
+    </div>
+   
+</div>
+
+<hr>
+
+<div>
+    {% if lecturers|length < 1 %}
+    <h4>There are no Teachers. Add one!</h4>
+    {% else %}
+    <table border ='10' style='margin-left:auto; margin-right:auto'>
+        <tr>
+            <th>Teacher ID</th>
+            <th>Teacher Name</th>
+            <th>Teacher Courses</th>
+            <th>Actions</th>
+        </tr>
+        {% for lecturer in lecturers %}
+        <tr>
+            <td>{{ lecturer.teacher_id }}</td>
+            <td>{{ lecturer.teacher_name }}</td>
+            <td> {{ lecturer.teacher_courses }}</td>
+            <td>
+                <a href="/teachers/delete/{{ lecturer.teacher_id }}">Delete</a>
+                <br>
+                <a href="/teachers/update/{{ lecturer.teacher_id }}">Update</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endif %} 
+   
+</div>
+
+<hr>
+
+<div class="content" style='margin-left:auto; margin-right:auto'>
+    <form actions="/teachers" method="POST">
+        <input type="text" name="new_name" id="new_name" placeholder="Enter Teacher name">
+        <br>
+        <input type="text" name="new_courses" id="new_courses" placeholder="Enter Teacher Courses">
+        <input type="submit" value="Add Teacher">
+    </form>
+</div>
+{% endblock %}
